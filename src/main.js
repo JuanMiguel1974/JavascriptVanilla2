@@ -3,6 +3,7 @@ import './main.css';
 import { router } from '../src/router/routes';
 import { checkUsuario } from './utils/chekUsuario';
 import { componentes } from './componentes/index.componentes';
+
 window.app = {};
 
 (function autoinvocada() {

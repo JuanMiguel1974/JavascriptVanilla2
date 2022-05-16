@@ -21,9 +21,14 @@ const router = (route) => {
         case '#/nuevo_estadio':
             return content.appendChild(pages.nuevo_estadio());
 
+
         case '#/navegacion':
 
             return content.appendChild(componentes.navegacion());
+
+        case '#/lista_estadios':
+
+            return content.appendChild(pages.lista_estadios());
 
         case '#/logout':
 

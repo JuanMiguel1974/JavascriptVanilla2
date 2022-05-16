@@ -2,6 +2,7 @@ import view from '../views/nuevo_estadio.html'
 import { pages } from '../controllers/index.controller'
 import '../css/toast.css'
 import { router } from '../router/routes';
+
 export default () => {
 
     const estadiosPage = document.createElement('div');

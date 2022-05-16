@@ -13,6 +13,7 @@ export default () => {
             .querySelector("#formLogin")
             .addEventListener("submit", function(event) {
 
+
                 let datosFormData = new FormData(this);
                 let objecteFormData = Object.fromEntries(datosFormData);
                 objecteFormData.returnSecureToken = true;
