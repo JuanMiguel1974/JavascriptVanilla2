@@ -1,7 +1,6 @@
 import view from '../views/nuevo_estadio.html'
 import { pages } from '../controllers/index.controller'
 import '../css/toast.css'
-import { router } from '../router/routes';
 
 export default () => {
 
@@ -10,22 +9,28 @@ export default () => {
 
     const url = "https://futbol-7727b-default-rtdb.firebaseio.com/estadios";
 
-    function encodeImageFileAsURL(element) {
-        var file = element.files[0];
+    function encodeImageFileAsURL() {
+        var file = this.files[0];
         var reader = new FileReader();
-        reader.onloadend = function() {
-            console.log("RESULT", reader.result);
-            element.imagen = reader.result;
+
+        reader.onloadend = () => {
+            console.log('RESULT', reader.result)
+            this.imagen = reader.result;
+            console.log(this.imagen);
+            estadiosPage.querySelector("#formFoto").src = reader.result;
         };
         reader.readAsDataURL(file);
     }
+    estadiosPage
+        .querySelector("#formFoto")
+        .addEventListener("change", encodeImageFileAsURL);
 
     estadiosPage.querySelector("#crear").addEventListener("click", function(event) {
         event.preventDefault();
         let estdioNuevo = {
             nombre: estadiosPage.querySelector("#nombre").value,
             aforo: estadiosPage.querySelector("#aforo").value,
-            imagen: estadiosPage.querySelector("#imagen").value,
+            imagen: estadiosPage.querySelector("#formFoto").imagen,
             ciudad: estadiosPage.querySelector("#ciudad").value,
             pais: estadiosPage.querySelector("#pais").value,
         };
