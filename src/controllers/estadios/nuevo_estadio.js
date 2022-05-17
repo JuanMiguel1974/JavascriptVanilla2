@@ -1,11 +1,13 @@
-import view from '../views/nuevo_estadio.html'
-import { pages } from '../controllers/index.controller'
-import '../css/toast.css'
+import view from '../../views/nuevo_estadio.html'
+import { pages } from '../index.controller'
+import { componentes } from '../../componentes/index.componentes'
+import '../../css/toast.css'
 
 export default () => {
 
     const estadiosPage = document.createElement('div');
     estadiosPage.innerHTML = view;
+    estadiosPage.querySelector("div").prepend(componentes.navegacion());
 
     const url = "https://futbol-7727b-default-rtdb.firebaseio.com/estadios";
 

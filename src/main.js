@@ -8,7 +8,7 @@ window.app = {};
 
 (function autoinvocada() {
     document.addEventListener("DOMContentLoaded",
-        function domLoad() {
+        async function domLoad() {
 
             if (checkUsuario()) {
 

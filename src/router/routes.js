@@ -32,7 +32,7 @@ const router = async(route) => {
 
         case '#/logout':
 
-            return content.appendChild(componentes.menu());
+            return content.appendChild(componentes.home());
     }
 };
 export { router };

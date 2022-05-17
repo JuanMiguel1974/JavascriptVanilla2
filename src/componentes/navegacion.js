@@ -1,7 +1,4 @@
 import view from '../views/navegacion.html'
-import { componentes } from "../componentes/index.componentes";
-
-
 
 export default () => {
     const navPage = document.createElement('div');
