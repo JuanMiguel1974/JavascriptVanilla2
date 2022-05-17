@@ -2,7 +2,7 @@ import { pages } from "../controllers/index.controller";
 import { componentes } from "../componentes/index.componentes";
 
 let content = document.getElementById('container')
-const router = (route) => {
+const router = async(route) => {
     content.innerHTML = '';
 
     switch (route) {
@@ -28,7 +28,7 @@ const router = (route) => {
 
         case '#/lista_estadios':
 
-            return content.appendChild(pages.lista_estadios());
+            return content.appendChild(await pages.lista_estadios());
 
         case '#/logout':
 
