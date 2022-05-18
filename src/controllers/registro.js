@@ -3,10 +3,26 @@ import { pages } from '../controllers/index.controller'
 import '../css/toast.css'
 
 export default () => {
+    const url = "https://futbol-7727b-default-rtdb.firebaseio.com/usuarios";
     const registroPage = document.createElement('div');
     registroPage.innerHTML = view;
 
     let user = registroPage.querySelector("#user");
+
+    registroPage.querySelector("#registro").addEventListener("click", function(event) {
+        event.preventDefault();
+        let usuarioNuevo = {
+            email: registroPage.querySelector("#email").value,
+            password: registroPage.querySelector("#password").value,
+        };
+        console.log(usuarioNuevo);
+
+        fetch(url + ".json", {
+            method: "post",
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            body: JSON.stringify(usuarioNuevo),
+        })
+    });
 
     if (localStorage.getItem("idToken")) {
         user.innerHTML = `Logged: ${localStorage.getItem("email")}`;

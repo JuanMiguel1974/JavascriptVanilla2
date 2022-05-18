@@ -10,14 +10,14 @@ const getEstadios = async() => {
     console.log(response);
     return await response.json();
 };
+
 export default async() => {
 
-
     const estadiosElement = listaEstadiosPage.querySelector("#estadios");
-
     const estadios = await getEstadios();
 
     Object.values(estadios).forEach((estadio) => {
+
         estadiosElement.innerHTML += `
 
         <div class="card" style="width: 100rem;">
@@ -33,12 +33,21 @@ export default async() => {
 
         </ul>
         <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
+        <button type="button" class="btn btn-danger borrar" >Elimimnar</button>
             <a href="#" class="card-link">Another link</a>
-        </div>
-      `;
-        console.log(estadio)
-    })
+        </div>`;
+        console.log(estadio);
+
+        estadiosElement.querySelector('.borrar').addEventListener("click", function(event) {
+
+            let id = this.parentNode.id;
+
+            fetch(`https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`, { method: 'delete', headers: { "Content-type": "application/json; charset=UTF-8" }, body: {} })
+                .then(response => response.json());
+        });
+
+    });
+
 
     return listaEstadiosPage;
 

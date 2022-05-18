@@ -48,6 +48,5 @@ export default () => {
         pages.toast.init();
         pages.toast.show('Ingresado nuevo estadio con exito', 'success');
     });
-
     return estadiosPage;
 }

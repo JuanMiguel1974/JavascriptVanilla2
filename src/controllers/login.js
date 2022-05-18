@@ -38,7 +38,7 @@ export default () => {
                             pages.toast.show('Logeado con exito', 'success');
                             setTimeout(() => {
                                 window.location.reload();
-                            }, 2000);
+                            }, 1000);
 
                             return response.json();
 
@@ -47,7 +47,7 @@ export default () => {
                             pages.toast.show('Compruebe sus datos e intentelo de nuevo', 'error');
                             setTimeout(() => {
                                 window.location.reload();
-                            }, 2000);
+                            }, 998);
                             return response.json().then((text) => {
                                 console.log(text);
                                 throw new Error(text.error.message);

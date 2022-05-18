@@ -19,6 +19,6 @@ export const Toast = {
         }
         this.hideTimeout = setTimeout(() => {
             this.el.classList.remove('toast--visible');
-        }, 2000);
+        }, 1000);
     }
 };

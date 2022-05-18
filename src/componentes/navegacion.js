@@ -7,8 +7,8 @@ export default () => {
         event.preventDefault;
         localStorage.clear();
         window.location.reload();
-        window.location.hash = '/#/'
     });
+    //window.location.hash = '/#/'
 
     return navPage;
 }
