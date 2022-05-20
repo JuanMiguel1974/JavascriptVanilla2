@@ -94,6 +94,6 @@ export default async() => {
                     }
                 ).then((response) => response.json());
             });
-        return listaEstadiosPage;
     }
+    return listaEstadiosPage;
 }
