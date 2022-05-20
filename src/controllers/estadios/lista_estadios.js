@@ -5,8 +5,10 @@ const listaEstadiosPage = document.createElement('div');
 listaEstadiosPage.innerHTML = view;
 listaEstadiosPage.querySelector("div").prepend(componentes.navegacion());
 
+
 const getEstadios = async() => {
-    const response = await fetch("https://futbol-7727b-default-rtdb.firebaseio.com/estadios.json");
+    const response = await (await fetch("https://futbol-7727b-default-rtdb.firebaseio.com/estadios.json"));
+
     console.log(response);
     return await response.json();
 };
@@ -38,13 +40,17 @@ export default async() => {
         </div>`;
         console.log(estadio);
 
-        estadiosElement.querySelector('.borrar').addEventListener("click", function(event) {
+        const deleteButtons = estadiosElement.querySelectorAll('.borrar');
+        deleteButtons.forEach((button) => {
 
-            let id = this.parentNode.id;
+            button.addEventListener("click", function(event) {
+                let id = Object.entries(estadios).map(entrie => { entrie[1].id = entrie[0]; return entrie[1] });
 
-            fetch(`https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`, { method: 'delete', headers: { "Content-type": "application/json; charset=UTF-8" }, body: {} })
-                .then(response => response.json());
-        });
+                console.log('id =>', id);
+                fetch(`https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`, { method: 'delete', headers: { "Content-type": "application/json; charset=UTF-8" }, body: {} })
+                    .then(response => response.json());
+            });
+        })
 
     });
 
