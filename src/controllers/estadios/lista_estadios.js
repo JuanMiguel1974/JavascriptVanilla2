@@ -13,51 +13,13 @@ const getEstadios = async() => {
     return await response.json();
 };
 
-export default async() => {
+const draw = async() => {
 
     const estadiosElement = listaEstadiosPage.querySelector("#estadios");
     const estadios = await getEstadios();
 
-    /*  Object.values(estadios).forEach((estadio) => {
 
-        estadiosElement.innerHTML += `
-
-        <div class="card" style="width: 100rem;">
-        <div class="card-body">
-            <h5 class="card-title">${estadio.nombre}</h5>
-
-        </div>
-        <ul class="list-group list-group-flush">
-            <img class="card-img-top" src="${estadio.imagen}" alt="Foto estadio">
-            <li class="list-group-item">Ciudad: ${estadio.ciudad}</li>
-            <li class="list-group-item">Pais: ${estadio.pais}</li>
-            <li class="list-group-item">Aforo: ${estadio.aforo}</li>
-
-        </ul>
-        <div class="card-body">
-        <button type="button" ref = "${estadio.id}" class="btn btn-danger borrar" >Elimimnar</button>
-            <a href="#" class="card-link">Another link</a>
-        </div>`;
-        console.log(estadio);
-
-        const deleteButtons = estadiosElement.querySelectorAll('.borrar');
-        deleteButtons.forEach((button) => {
-
-            button.addEventListener("click", function(event) {
-                let array = Object.entries(estadios).map(entrie => { entrie[1].id = entrie[0]; return entrie[1] });
-                let id = event.target.getAttribute("ref");
-                console.log('id =>', id);
-                fetch(`https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`, { method: 'delete', headers: { "Content-type": "application/json; charset=UTF-8" }, body: {} })
-                    .then(response => response.json());
-            });
-        })
-
-    });
-
-
-    return listaEstadiosPage;
-
-} */
+    estadiosElement.innerHTML = ""
     for (let id in estadios) {
         let estadio = estadios[id];
         estadio.id = id;
@@ -78,22 +40,43 @@ export default async() => {
         </ul>
         <div class="card-body">
         <button type="button" ref="${estadio.id}" class="btn btn-danger borrar" >Elimimnar</button>
-            <a href="#" class="card-link">Another link</a>
+        </div>
+        <div class="card-body">
+        <button type="button" ref="${estadio.id}" class="btn btn-warning modificar" >Modificar</button>
         </div>`;
 
-        estadiosElement
-            .querySelector(".borrar")
-            .addEventListener("click", function(event) {
-                let id = event.target.getAttribute("ref");
+        console.log(estadio.id)
 
-                fetch(
-                    `https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`, {
-                        method: "delete",
-                        headers: { "Content-type": "application/json; charset=UTF-8" },
-                        body: {},
-                    }
-                ).then((response) => response.json());
-            });
+
     }
+
+    let botonesEliminar = estadiosElement.querySelectorAll(".borrar")
+    let botonesModificar = estadiosElement.querySelectorAll('.modificar')
+
+    botonesEliminar.forEach(boton => {
+        boton.addEventListener("click", function(event) {
+            let id = event.target.getAttribute("ref");
+
+            let url = `https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`
+            fetch(url, {
+                method: "delete",
+                headers: { "Content-type": "application/json; charset=UTF-8" },
+                body: {},
+            }).then(() => draw());
+        });
+    });
+
+    botonesModificar(Item).forEach(boton => {
+        boton.addEventListener("click", function(event) {
+            let id = event.target.getAttribute("ref");
+            delete this.id;
+
+            fetch(`https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`, { method: 'put', headers: { "Content-type": "application/json; charset=UTF-8" }, body: JSON.stringify(Item) })
+                .then(response => response.json())
+
+        });
+    });
     return listaEstadiosPage;
 }
+
+export default draw
