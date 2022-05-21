@@ -8,7 +8,6 @@ export default () => {
         localStorage.clear();
         window.location.reload();
     });
-    //window.location.hash = '/#/'
 
     return navPage;
 }

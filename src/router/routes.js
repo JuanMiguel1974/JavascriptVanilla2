@@ -34,5 +34,6 @@ const router = async(route) => {
 
             return content.appendChild(componentes.home());
     }
+    window.location.reload();
 };
 export { router };
