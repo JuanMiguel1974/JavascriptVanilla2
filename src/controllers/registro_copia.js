@@ -7,6 +7,26 @@ export default () => {
     const registroPage = document.createElement('div');
     registroPage.innerHTML = view;
 
+    let user = registroPage.querySelector("#user");
+
+    registroPage.querySelector("#registro").addEventListener("click", function(event) {
+        event.preventDefault();
+        let usuarioNuevo = {
+            email: registroPage.querySelector("#email").value,
+            nickname: registroPage.querySelector('#nickname').value,
+        };
+        console.log(usuarioNuevo);
+
+        fetch(url + ".json", {
+            method: "post",
+            headers: { "Content-type": "application/json; charset=UTF-8" },
+            body: JSON.stringify(usuarioNuevo),
+        })
+    });
+
+    if (localStorage.getItem("idToken")) {
+        user.innerHTML = `Logged: ${localStorage.getItem("email")}`;
+    }
     registroPage.querySelector("#registro").addEventListener("click", function(event) {
         registroPage
             .querySelector("#formRegistre")
@@ -31,17 +51,6 @@ export default () => {
                     )
                     .then((response) => {
                         if (response.ok) {
-                            let usuarioNuevo = {
-                                email: registroPage.querySelector("#email").value,
-                                nickname: registroPage.querySelector('#nickname').value,
-                            };
-                            console.log(usuarioNuevo);
-
-                            fetch(url + ".json", {
-                                method: "post",
-                                headers: { "Content-type": "application/json; charset=UTF-8" },
-                                body: JSON.stringify(usuarioNuevo),
-                            })
 
                             pages.toast.init();
                             pages.toast.show('Registrado con exito . Ya puedes hacer login', 'success');

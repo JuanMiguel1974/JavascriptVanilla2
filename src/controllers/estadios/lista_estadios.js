@@ -1,5 +1,7 @@
 import view from '../../views/lista_estadios.html'
-import { componentes } from '../../componentes/index.componentes'
+import '../../css/toast.css'
+import { pages } from '../index.controller'
+
 
 const listaEstadiosPage = document.createElement('div');
 listaEstadiosPage.innerHTML = view;
@@ -69,17 +71,17 @@ const draw = async() => {
 
             let url = `https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`
             fetch(url, {
-                method: "delete",
-                headers: { "Content-type": "application/json; charset=UTF-8" },
-                body: {},
-            }).then(() => draw());
+                    method: "delete",
+                    headers: { "Content-type": "application/json; charset=UTF-8" },
+                    body: {},
+                })
+                .then(() => draw())
         });
     });
 
     botonesModificar.forEach(boton => {
         boton.addEventListener("click", function(event) {
             let key = event.target.getAttribute("ref");
-            // delete event.target.getAttribute("ref");
             console.log('update', key);
 
             let estadio = estadios[key];
@@ -111,7 +113,7 @@ const draw = async() => {
            <label for="formFoto" class="form-label">Cambia la imagen</label>
            <input type="file" id="formFoto" class="form-control" onchange="encodeImageFilesAsURL()">
        </div>
-       <button type="button" ref="${estadio.id}" class="btn btn-warning modificar" href="#/lista_estadios" >Modificar</button>
+       <button type="button" ref="${estadio.id}" class="btn btn-warning modificar" href="#/nuevo_estadio" >Modificar</button>
        </div>`;
 
             estadiosElement
@@ -137,10 +139,31 @@ const draw = async() => {
                         headers: { "Content-type": "application/json; charset=UTF-8" },
                         body: JSON.stringify(estadioModificado),
                     })
-                    .then(response => response.json())
+                    .then((response) => {
+                        if (response.ok) {
 
+                            pages.toast.init();
+                            pages.toast.show('Modificado con exito', 'success');
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
+
+                            return response.json();
+
+                        } else {
+                            pages.toast.init();
+                            pages.toast.show('no se ha podido modificar', 'error');
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 998);
+                            return response.json().then((text) => {
+                                console.log(text);
+                                throw new Error(text.error.message);
+                            });
+                        }
+                    })
             });
-            // return listaEstadiosPage;
+
         });
 
     })
