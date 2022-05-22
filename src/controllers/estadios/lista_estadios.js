@@ -3,12 +3,23 @@ import { componentes } from '../../componentes/index.componentes'
 
 const listaEstadiosPage = document.createElement('div');
 listaEstadiosPage.innerHTML = view;
-listaEstadiosPage.querySelector("div").prepend(componentes.navegacion());
 
+function encodeImageFileAsURL() {
+    var file = this.files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = () => {
+        console.log('RESULT', reader.result)
+        this.imagen = reader.result;
+        console.log(this.imagen);
+        //estadiosElement.querySelector("#formFoto").src = reader.result;
+    };
+    reader.readAsDataURL(file);
+}
 const getEstadios = async() => {
     const response = await (await fetch("https://futbol-7727b-default-rtdb.firebaseio.com/estadios.json"));
 
-    console.log(response);
+    console.log('getEstadios =>', response);
     return await response.json();
 };
 
@@ -17,15 +28,18 @@ const draw = async() => {
     const estadiosElement = listaEstadiosPage.querySelector("#estadios");
     const estadios = await getEstadios();
 
-
     estadiosElement.innerHTML = ""
+
     for (let id in estadios) {
         let estadio = estadios[id];
         estadio.id = id;
+        console.log('estadio=>', estadio);
+        console.log('listado de estadios =>', estadio.id)
 
         estadiosElement.innerHTML += `
-
-        <div class="card" style="width: 100rem;">
+        <h2>
+        ${estadio.id}</h2>
+        <div class="card" style="width: 30rem;">
         <div class="card-body">
             <h5 class="card-title">${estadio.nombre}</h5>
 
@@ -43,10 +57,6 @@ const draw = async() => {
         <div class="card-body">
         <button type="button" ref="${estadio.id}" class="btn btn-warning modificar" >Modificar</button>
         </div>`;
-
-        console.log(estadio.id)
-
-
     }
 
     let botonesEliminar = estadiosElement.querySelectorAll(".borrar")
@@ -55,6 +65,7 @@ const draw = async() => {
     botonesEliminar.forEach(boton => {
         boton.addEventListener("click", function(event) {
             let id = event.target.getAttribute("ref");
+            console.log('id que borro =>', id);
 
             let url = `https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${id}.json`
             fetch(url, {
@@ -68,76 +79,72 @@ const draw = async() => {
     botonesModificar.forEach(boton => {
         boton.addEventListener("click", function(event) {
             let key = event.target.getAttribute("ref");
-            delete event.target.getAttribute("ref");
+            // delete event.target.getAttribute("ref");
             console.log('update', key);
-            for (let id in estadios) {
-                let estadio = estadios[id];
-                estadio.id = id;
 
-                estadiosElement.innerHTML = `<label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Nombre" value="${estadio.nombre}">
-          </div>
-          <div class="mb-3">
-            <label for="ciudad" class="form-label">Ciudad</label>
-            <input type="text" class="form-control" id="ciudad" placeholder="Ciudad" value="${estadio.ciudad}">
-          </div>
-          <div class="mb-3">
-            <label for="pais" class="form-label">Pais</label>
-            <input type="text" class="form-control" id="pais" placeholder="Pais" value="${estadio.pais}">
-          </div>
+            let estadio = estadios[key];
+            estadio.id = key;
+            console.log('key que muestra los datos', key);
 
-          <div class="mb-3">
-            <label for="formFoto" class="form-label">Foto</label>
-            <img class="card-img-top" src="" alt="Foto estadio">
+            console.log('este_nombre', estadio.nombre);
 
-            <input type="file" class="form-control" id="formFoto" placeholder="Foto" >
-            <img class="formFotoPreview" style="width:200px"/>
-           <button id="crear">Modificar</button>
-          </div>`;
+            estadiosElement.innerHTML = `
+            <h2>Modifica el estadio</h2>
+            <label for="nombre" class="form-label">Cambia el nombre</label>
+             <input type="text" class="form-control" id="nombre" placeholder="nombre" value="${estadio.nombre}">
+           </div>
+           <div class="mb-3">
+             <label for="ciudad" class="form-label">Cambia la ciudad</label>
+             <input type="text" class="form-control" id="ciudad" placeholder="ciudad" value="${estadio.ciudad}">
+           </div>
+           <div class="mb-3">
+             <label for="pais" class="form-label">Cambia el pais</label>
+             <input type="text" class="form-control" id="pais" placeholder="pais" value="${estadio.pais}">
+           </div>
 
+           <div class="mb-3">
+             <img class="card-img-top" src="${estadio.imagen}" alt="Foto estadio">
+           </div>
 
-                function encodeImageFileAsURL() {
-                    var file = this.files[0];
-                    var reader = new FileReader();
+         
+           <div class="col-md-6">
+           <label for="formFoto" class="form-label">Cambia la imagen</label>
+           <input type="file" id="formFoto" class="form-control" onchange="encodeImageFilesAsURL()">
+       </div>
+       <button type="button" ref="${estadio.id}" class="btn btn-warning modificar" href="#/lista_estadios" >Modificar</button>
+       </div>`;
 
-                    reader.onloadend = () => {
-                        console.log('RESULT', reader.result)
-                        this.imagen = reader.result;
-                        console.log(this.imagen);
-                        estadiosElement.querySelector("#formFoto").src = reader.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-                estadiosElement
-                    .querySelector("#formFoto")
-                    .addEventListener("change", encodeImageFileAsURL);
+            estadiosElement
+                .querySelector("#formFoto")
+                .addEventListener("change", encodeImageFileAsURL);
 
-                estadiosElement.querySelector("#crear").addEventListener("click", function(event) {
-                    //let key = event.target.getAttribute("ref");
-                    //delete event.target.getAttribute("ref");
-                    event.preventDefault();
-                    let estadioModificado = {
-                        nombre: estadiosElement.querySelector("#nombre").value,
-                        //aforo: estadiosElement.querySelector("#aforo").value,
-                        imagen: estadiosElement.querySelector("#formFoto").imagen = estadio.imagen,
-                        ciudad: estadiosElement.querySelector("#ciudad").value,
-                        pais: estadiosElement.querySelector("#pais").value,
+            estadiosElement.querySelector(".modificar").addEventListener("click", function(event) {
+                let key = event.target.getAttribute("ref");
+                delete event.target.getAttribute("ref");
+                event.preventDefault();
+                let estadioModificado = {
+                    nombre: estadiosElement.querySelector("#nombre").value,
+                    //aforo: estadiosElement.querySelector("#aforo").value,
+                    imagen: estadiosElement.querySelector("#formFoto").imagen,
+                    ciudad: estadiosElement.querySelector("#ciudad").value,
+                    pais: estadiosElement.querySelector("#pais").value,
 
-                    };
-                    console.log(estadioModificado);
+                };
+                console.log(estadioModificado);
 
-                    fetch(`https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${key}.json`, {
-                            method: 'put',
-                            headers: { "Content-type": "application/json; charset=UTF-8" },
-                            body: JSON.stringify(estadioModificado),
-                        })
-                        .then(response => response.json())
+                fetch(`https://futbol-7727b-default-rtdb.firebaseio.com/estadios/${key}.json`, {
+                        method: 'put',
+                        headers: { "Content-type": "application/json; charset=UTF-8" },
+                        body: JSON.stringify(estadioModificado),
+                    })
+                    .then(response => response.json())
 
-                });
-
-            }
+            });
+            // return listaEstadiosPage;
         });
+
     })
+
     return listaEstadiosPage;
 }
 export default draw
