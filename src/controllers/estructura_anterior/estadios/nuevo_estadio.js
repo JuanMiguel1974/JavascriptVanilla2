@@ -1,6 +1,6 @@
 import view from '../../views/nuevo_estadio.html'
 import { pages } from '../index.controller'
-import { componentes } from '../../componentes/index.componentes'
+import { componentes } from '../../../componentes/index.componentes'
 import '../../css/toast.css'
 
 export default () => {
