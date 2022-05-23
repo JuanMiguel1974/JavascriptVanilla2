@@ -31,16 +31,16 @@ export default () => {
             if (email.value === null || email.value === '') {
                 mensajesError.push('Ingresa un correo electrónico');
             }
-            /*  if (expresiones.correo.test(email.value)) {
+             if (!expresiones.correo.test(email.value)) {
                  mensajesError.push('Ingresa un correo valido');
-             } */
+             } 
             if (password.value === null || password.value === '') {
                 mensajesError.push('Ingresa tu password');
 
             }
-            /*   if ((expresiones.password).test(password.value)) {
+               if (!expresiones.password.test(password.value)) {
                   mensajesError.push('Password entre 6 y 12 caracteres');
-              } */
+              } 
 
             error.innerHTML = mensajesError.join(', ');
             console.log(mensajesError);
