@@ -39,8 +39,6 @@ class BaseDatosService {
             .then(datos => {
                 this.read();
             });
-
-
     }
     remove(id) {
         console.log('remove', id);
@@ -51,8 +49,8 @@ class BaseDatosService {
             });
     }
 
-    notificarCambios(callback) { // Funció per a que el controlador associe els canvis amb la vista
-        this.onCambioItems = callback; // callback serà una funció de la vista
+    notificarCambios(callback) {
+        this.onCambioItems = callback;
     }
 
 }
