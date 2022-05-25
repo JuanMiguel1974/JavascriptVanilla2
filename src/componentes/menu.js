@@ -1,4 +1,5 @@
 import view from '../html/menu.html'
+import Home from '../imagenes/home/home4.jpg'
 export { menu };
 
 function menu() {
