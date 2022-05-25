@@ -21,7 +21,6 @@ const router = async(route) => {
         case '#/nuevo_estadio':
             return content.appendChild(pages.nuevo_estadio());
 
-
         case '#/navegacion':
 
             return content.appendChild(componentes.navegacion());
@@ -34,6 +33,6 @@ const router = async(route) => {
 
             return content.appendChild(componentes.home());
     }
-    window.location.reload();
+
 };
 export { router };

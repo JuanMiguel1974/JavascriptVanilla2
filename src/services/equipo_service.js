@@ -1,17 +1,16 @@
-import { Service } from "./service.js"
+import { BaseDatosService } from "./base_datos_service"
 export { EquipoService }
 
-class EquipoService extends Service {
+class EquipoService extends BaseDatosService {
     constructor() {
         super(`${app.url}equipos`);
 
     }
 }
 
+class ListaService extends BaseDatosService {
+    constructor() {
+        super(`${app.url}/equipos.json`);
 
-/* class ListaService extends Service {
-	constructor() {
-		super(`${app.url}/listas.json`);
-	
-	}
-} */
+    }
+}

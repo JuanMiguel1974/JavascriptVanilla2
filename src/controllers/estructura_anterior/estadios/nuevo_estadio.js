@@ -1,7 +1,7 @@
-import view from '../../views/nuevo_estadio.html'
-import { pages } from '../index.controller'
+import view from '../../../html/nuevo_estadio.html'
+import { pages } from '../../index.controller'
 import { componentes } from '../../../componentes/index.componentes'
-import '../../css/toast.css'
+import '../../../css/toast.css'
 
 export default () => {
 

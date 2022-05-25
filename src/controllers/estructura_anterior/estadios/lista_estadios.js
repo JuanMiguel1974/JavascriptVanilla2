@@ -1,6 +1,6 @@
-import view from '../../views/lista_estadios.html'
-import '../../css/toast.css'
-import { pages } from '../index.controller'
+import view from '../../../html/lista_estadios.html'
+import '../../../css/toast.css'
+import { pages } from '../../index.controller'
 
 
 const listaEstadiosPage = document.createElement('div');

@@ -1,4 +1,4 @@
-import view from '../views/menu.html'
+import view from '../html/menu.html'
 export { menu };
 
 function menu() {

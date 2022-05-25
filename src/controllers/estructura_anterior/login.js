@@ -1,7 +1,7 @@
-import view from '../views/login.html'
-import { pages } from '../controllers/index.controller'
-import '../css/toast.css'
+import view from '../../html/login.html'
+import { pages } from '../index.controller'
 
+import '../../css/toast.css'
 export default () => {
     const expresiones = {
         //usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
@@ -13,6 +13,7 @@ export default () => {
     const loginPage = document.createElement('div');
     loginPage.innerHTML = view;
 
+    console.log(app.url);
     loginPage
         .querySelector("#formLogin")
         .addEventListener("submit", function(event) {
@@ -31,16 +32,16 @@ export default () => {
             if (email.value === null || email.value === '') {
                 mensajesError.push('Ingresa un correo electrónico');
             }
-             if (!expresiones.correo.test(email.value)) {
-                 mensajesError.push('Ingresa un correo valido');
-             } 
+            if (!expresiones.correo.test(email.value)) {
+                mensajesError.push('Ingresa un correo valido');
+            }
             if (password.value === null || password.value === '') {
                 mensajesError.push('Ingresa tu password');
 
             }
-               if (!expresiones.password.test(password.value)) {
-                  mensajesError.push('Password entre 6 y 12 caracteres');
-              } 
+            if (!expresiones.password.test(password.value)) {
+                mensajesError.push('Password entre 6 y 12 caracteres');
+            }
 
             error.innerHTML = mensajesError.join(', ');
             console.log(mensajesError);

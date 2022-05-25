@@ -1,4 +1,5 @@
-import view from '../views/navegacion.html'
+import view from '../html/navegacion.html'
+import { PageEquipos } from '../pages/equipos';
 
 export default () => {
     const navPage = document.createElement('div');
@@ -9,5 +10,11 @@ export default () => {
         window.location.reload();
     });
 
+    app.equipos = new PageEquipos('Equipos')
+
+    function cargarEquipos() {
+        app.equipos.populate(app.container)
+    };
+    navPage.querySelector('#equipos').addEventListener('click', cargarEquipos);
     return navPage;
 }

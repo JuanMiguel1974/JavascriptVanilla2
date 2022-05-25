@@ -1,6 +1,6 @@
-import view from '../views/registro.html'
-import { pages } from '../controllers/index.controller'
-import '../css/toast.css'
+import view from '../../html/registro.html'
+import { pages } from '../index.controller'
+import '../../css/toast.css'
 
 export default () => {
     const url = "https://futbol-7727b-default-rtdb.firebaseio.com/usuarios";

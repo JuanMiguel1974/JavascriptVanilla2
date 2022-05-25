@@ -4,12 +4,14 @@ import { router } from '../src/router/routes';
 import { checkUsuario } from './utils/chekUsuario';
 import { componentes } from './componentes/index.componentes';
 
+
 window.app = {};
 app.url = 'https://futbol-7727b-default-rtdb.firebaseio.com/';
 
 (function autoinvocada() {
     document.addEventListener("DOMContentLoaded",
         async function domLoad() {
+            app.container = document.querySelector('#container')
 
             if (checkUsuario()) {
 
