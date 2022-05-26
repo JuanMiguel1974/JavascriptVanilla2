@@ -20,6 +20,7 @@ class View {
     render(Item) { // Esta funció serà sobreescrita per cada vista
 
     }
+    renderLogin() {}
 
     removeItem(Item) {
         console.log(Item); // al fer el bind, aquesta funció es sobreescriu
@@ -34,6 +35,11 @@ class View {
     mostrarFormulario() { // Este és per a mostrar el formulari de creació, crida internament a construirFormulario
     }
 
+    construirLogin(Item, divItem) {}
+
+    mostrarLogin() {
+
+    }
 
     editItem(Item, divItem) { // funció base que crea el formular i cancelar. El botó enviar es tindrà que escriurer
         divItem.innerHTML = '';

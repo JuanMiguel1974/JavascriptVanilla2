@@ -7,6 +7,7 @@ class JugadorView extends View {
     constructor(container) { super(container); }
 
     render(jugador) {
+        console.log('render');
 
         document.querySelector("#container").prepend(componentes.navegacion());
         let divJugador = document.createElement('div');
@@ -46,6 +47,7 @@ class JugadorView extends View {
     }
 
     construirFormulario(jugador, divJugador) {
+        console.log('construirFormulario');
         if (jugador == undefined) { jugador = { id: '', nombre: '', equipo: '', nacionalidad: '', foto: '', posicion: '' } }
 
         let formulario = `<div class="mb-3">
@@ -87,6 +89,7 @@ class JugadorView extends View {
     }
 
     mostrarFormulario() {
+        console.log('mostrarformulario');
         let divFormulario = document.createElement('div');
         divFormulario.classList.add('col', 'mt-5', 'pt-5');
         let botonNuevo = document.createElement('button');
@@ -127,7 +130,10 @@ class JugadorView extends View {
         this.divRow.append(divFormulario);
     }
 
+
+
     bindAddJugador(handler) {
+        console.log('bindAddJugador');
         this.botonEnviar.addEventListener('click', () => {
             let nombre = this.formularioJugador.querySelector('#formNombre').value;
             let equipo = this.formularioJugador.querySelector('#formEquipo').value;
@@ -140,10 +146,12 @@ class JugadorView extends View {
     }
 
     bindRemoveJugador(handler) {
+        console.log('bindRemoveJugador');
         this.removeItem = handler;
     }
 
     bindEditJugador(handler) {
+        console.log('bindEditJugador');
         this.updateItem = handler;
     }
 
@@ -155,5 +163,6 @@ class JugadorView extends View {
         Item.posicion = divItem.querySelector('#formPosicion').value;
         Item.foto = divItem.querySelector('#formFoto').foto;
         this.updateItem(Item);
+        console.log('updateItem');
     }
 }
