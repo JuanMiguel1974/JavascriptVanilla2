@@ -1,26 +1,32 @@
 export { View }
 
 class View {
-    Items = []
+
     constructor(container) {
         this.container = container;
         this.divRow = document.createElement('div');
+        this.Items = []
     }
-    mostrarItems(Items) {
+    mostrarItems(Items = []) {
         this.Items = Items;
-        this.container.innerHTML = '';
+        // console.log("mostrarItems");
+        this.container.innerHTML = '<h1>Login</h1>';
         this.divRow.innerHTML = '';
-        this.divRow.classList.add('row', 'row-cols-1', 'row-cols-md-3', 'g-4');
+        this.divRow.classList.add('col', 'row-cols-4', 'row-cols-md-3', 'g-4');
         this.container.append(this.divRow);
+
         for (let key of Items) {
             this.render(key);
         }
-        this.mostrarFormulario();
+
+        // Si no hay items, es solo una vista
+        if (Items.length == 0) {
+            this.render()
+        }
     }
     render(Item) { // Esta funció serà sobreescrita per cada vista
 
     }
-    renderLogin() {}
 
     removeItem(Item) {
         console.log(Item); // al fer el bind, aquesta funció es sobreescriu
@@ -33,12 +39,6 @@ class View {
     construirFormulario(Item, divItem) {} // Este és per a crear un formulari en un producte concret en un div concret
 
     mostrarFormulario() { // Este és per a mostrar el formulari de creació, crida internament a construirFormulario
-    }
-
-    construirLogin(Item, divItem) {}
-
-    mostrarLogin() {
-
     }
 
     editItem(Item, divItem) { // funció base que crea el formular i cancelar. El botó enviar es tindrà que escriurer
@@ -64,7 +64,6 @@ class View {
     updateItemEnviar(Item, divItem) {
         console.log(divItem); // esta funció es fa per separat per poder sobreescriure en la vista específica
     }
-
 
     botonEnviar = document.createElement('button'); // Necessari per associar events abans de crear la vista
 }

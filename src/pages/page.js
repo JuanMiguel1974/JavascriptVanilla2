@@ -1,6 +1,6 @@
 export { Page };
 
-class Page { ///////// Cada una de les pàgines de la web
+class Page {
     constructor(name) { this.name = name; }
     populate(container) {
 

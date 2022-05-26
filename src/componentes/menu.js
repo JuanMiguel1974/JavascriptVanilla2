@@ -1,8 +1,7 @@
 import view from '../html/menu.html'
 import { PageLogin } from '../pages/login'
-export { menu };
 
-function menu() {
+export function menu() {
     let navMenu = document.createElement("header");
     navMenu.innerHTML = view;
 
