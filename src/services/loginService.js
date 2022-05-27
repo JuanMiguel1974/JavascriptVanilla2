@@ -4,7 +4,8 @@ export { LoginService };
 
 class LoginService {
     constructor() {
-            this.url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD8hfH8YVdrzF4LkhLi4q5lKhVludOeG_k';
+            this.urlLogin = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD8hfH8YVdrzF4LkhLi4q5lKhVludOeG_k';
+            this.urlRegister = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD8hfH8YVdrzF4LkhLi4q5lKhVludOeG_k';
             this.user = "";
         }
         /**
@@ -18,7 +19,7 @@ class LoginService {
          */
     async login(user) {
         try {
-            return await fetch(this.url, {
+            return await fetch(this.urlLogin, {
                     method: "post",
                     headers: {
                         "Content-type": "application/json; charset=UTF-8",
@@ -60,12 +61,60 @@ class LoginService {
         }
     }
 
-    /*  logout() {
-         // por hacer
-     }
+    /**
+     * @param {*} usuario 
+     * email: "",
+     * password: "",
+     * nickname: "",
+     *  returnSecureToken: true
+     * @returns {Promise<Response>}
+     */
+    async register(usuario) {
+        try {
+            return await fetch(
+                    this.urlRegister, {
+                        method: "post",
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                        },
+                        body: JSON.stringify(usuario),
+                    }
+                )
+                .then((response) => {
+                    if (response.ok) {
+                        let usuarioNuevo = {
+                            email: email.value,
+                            nickname: nickname.value,
+                        };
+                        console.log('usuarioNuevo', usuarioNuevo);
 
-     register(user) {
-         // por hacer
-     } */
+                        fetch(app.url + "usuarios.json", {
+                            method: "post",
+                            headers: { "Content-type": "application/json; charset=UTF-8" },
+                            body: JSON.stringify(usuarioNuevo),
+                        })
+                        componentes.toast.init();
+                        componentes.toast.show('Registrado con exito . Ya puedes hacer login', 'success');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+
+                        return response.json();
+                    } else {
+                        return response.json().then((text) => {
+                            console.log(text);
+                            componentes.toast.init();
+                            componentes.toast.show('Compruebe sus datos. Intetalo de nuevo', 'error');
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 2000);
+                            throw new Error(text.error.message);
+                        });
+                    }
+                })
+        } catch (error) {
+            return Promise.reject(error);
+        }
+    }
 
 }

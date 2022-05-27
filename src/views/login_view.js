@@ -33,9 +33,9 @@ class LoginView extends View {
         </form>
     </div>`;
         this.divRow.append(this.divLogin);
+        this.divRow.classList.add('row', 'row-cols-4', 'row-cols-md-3', 'g-4');
+
     }
-
-
 
     bindLogin(handler) {
         console.log('bindLogin');

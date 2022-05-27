@@ -11,7 +11,6 @@ class PageEstadios extends Page {
     }
 
     populate(container) {
-        container.innerHTML = `<h1>Estadios</h1>`
         let estadioController = new EstadioController(new EstadioService(), new EstadioView(container));
     }
 }

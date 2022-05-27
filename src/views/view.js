@@ -2,15 +2,21 @@ export { View }
 
 class View {
 
+    Items = []
     constructor(container) {
         this.container = container;
         this.divRow = document.createElement('div');
-        this.Items = []
     }
-    mostrarItems(Items = []) {
+
+    /*  constructor(container) {
+         this.container = container;
+         this.divRow = document.createElement('div');
+         this.Items = []
+     } */
+    mostrarItems(Items) {
         this.Items = Items;
         // console.log("mostrarItems");
-        this.container.innerHTML = '<h1>Login</h1>';
+        this.container.innerHTML = '';
         this.divRow.innerHTML = '';
         this.divRow.classList.add('col', 'row-cols-4', 'row-cols-md-3', 'g-4');
         this.container.append(this.divRow);
@@ -18,14 +24,15 @@ class View {
         for (let key of Items) {
             this.render(key);
         }
+        this.mostrarFormulario();
 
         // Si no hay items, es solo una vista
         if (Items.length == 0) {
-            this.render()
+            this.render();
+
         }
     }
     render(Item) { // Esta funció serà sobreescrita per cada vista
-
     }
 
     removeItem(Item) {

@@ -1,4 +1,4 @@
-import { pages } from "../controllers/index.controller";
+//import { pages } from "../controllers/index.controller";
 import { componentes } from "../componentes/index.componentes";
 
 let content = document.getElementById('container')
@@ -8,10 +8,10 @@ const router = async(route) => {
 
         case '#/':
             return content.appendChild(componentes.home());
+            /* 
+                    case '#/registro':
 
-        case '#/registro':
-
-            return content.appendChild(pages.registro());
+                        return content.appendChild(pages.registro()); */
 
         case '#/navegacion':
 

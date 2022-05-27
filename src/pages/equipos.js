@@ -11,7 +11,6 @@ class PageEquipos extends Page {
     }
 
     populate(container) {
-        container.innerHTML = `<h1>Equipos</h1>`
         let equipoController = new EquipoController(new EquipoService(), new EquipoView(container));
     }
 }
