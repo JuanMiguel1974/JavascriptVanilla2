@@ -1,4 +1,3 @@
-//import { pages } from "../controllers/index.controller";
 import { componentes } from "../componentes/index.componentes";
 
 let content = document.getElementById('container')

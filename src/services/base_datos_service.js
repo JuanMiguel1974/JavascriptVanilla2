@@ -11,12 +11,8 @@ class BaseDatosService {
         fetch(this.url + '.json')
             .then(response => response.json())
             .then(datosItems => {
-                // En firebase retorna un objecte amb tots els productes. Serà més fàcil si fem un array
-                // de pas, afegim el key com a id
-
                 this.Items = Object.entries(datosItems).map(entrie => { entrie[1].id = entrie[0]; return entrie[1] });
-                //console.log(this.Items);
-                this.onCambioItems(this.Items); // cridem al callback de la vista associat per el cotrolador amb notificarcambios
+                this.onCambioItems(this.Items);
             });
     }
 

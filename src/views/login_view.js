@@ -50,22 +50,30 @@ class LoginView extends View {
             let password = event.target.password.value
             let returnSecureToken = true;
 
-            var mensajesError = [];
+            // Closure
+            const getErrors = () => {
+                let errores = []
+                if (email == null || !email.length) {
+                    // undefined == null // true
+                    // undefined === null // false
+                    errores.push('Ingresa un correo electrónico');
+                }
+                if (!expresiones.correo.test(email)) {
+                    errores.push('Ingresa un mail valido');
+                }
+                if (password == null || !password.length) {
+                    errores.push('Ingresa tu password');
+
+                }
+                if (!expresiones.password.test(password || '')) {
+                    errores.push('Password entre 6 y 12 caracteres');
+                }
+                return errores
+            }
+
+            var mensajesError = getErrors();
+
             var error = this.divLogin.querySelector('#error');
-
-            if (email.value === null || email.value === '') {
-                mensajesError.push('Ingresa un correo electrónico');
-            }
-            if (!expresiones.correo.test(email.value)) {
-                mensajesError.push('Ingresa un mail valido');
-            }
-            if (password.value === null || password.value === '') {
-                mensajesError.push('Ingresa tu password');
-
-            }
-            if (!expresiones.password.test(password.value)) {
-                mensajesError.push('Password entre 6 y 12 caracteres');
-            }
 
             error.innerHTML = mensajesError.join(', ');
 

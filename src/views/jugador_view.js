@@ -48,6 +48,7 @@ class JugadorView extends View {
 
     construirFormulario(jugador, divJugador) {
         console.log('construirFormulario');
+        //Objeto literal
         if (jugador == undefined) { jugador = { id: '', nombre: '', equipo: '', nacionalidad: '', foto: '', posicion: '' } }
 
         let formulario = `<div class="mb-3">
