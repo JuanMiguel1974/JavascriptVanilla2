@@ -40,11 +40,36 @@ class LoginView extends View {
     bindLogin(handler) {
         console.log('bindLogin');
 
+        const expresiones = {
+            password: /^.{6,12}$/, // 6 a 12 digitos.
+            correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+        }
         this.divLogin.querySelector('#formLogin').addEventListener('submit', (event) => {
             event.preventDefault()
             let email = event.target.email.value
             let password = event.target.password.value
             let returnSecureToken = true;
+
+            var mensajesError = [];
+            var error = this.divLogin.querySelector('#error');
+
+            if (email.value === null || email.value === '') {
+                mensajesError.push('Ingresa un correo electrónico');
+            }
+            if (!expresiones.correo.test(email.value)) {
+                mensajesError.push('Ingresa un mail valido');
+            }
+            if (password.value === null || password.value === '') {
+                mensajesError.push('Ingresa tu password');
+
+            }
+            if (!expresiones.password.test(password.value)) {
+                mensajesError.push('Password entre 6 y 12 caracteres');
+            }
+
+            error.innerHTML = mensajesError.join(', ');
+
+            if (mensajesError.length) return false;
             handler({ email, password, returnSecureToken });
         });
     }

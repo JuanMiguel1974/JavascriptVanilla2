@@ -8,10 +8,6 @@ const router = async(route) => {
 
         case '#/':
             return content.appendChild(componentes.home());
-            /* 
-                    case '#/registro':
-
-                        return content.appendChild(pages.registro()); */
 
         case '#/navegacion':
 
