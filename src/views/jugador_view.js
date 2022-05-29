@@ -57,6 +57,7 @@ class JugadorView extends View {
   <div class="mb-3">
     <label for="formNombre" class="form-label">Nombre</label>
     <input type="text" class="form-control" id="formNombre" name="formNombre" placeholder="Nombre" value="${jugador.nombre}">
+    
   </div>
   <div class="mb-3">
     <label for="formEquipo" class="form-label">Equipo</label>
@@ -153,10 +154,11 @@ class JugadorView extends View {
             let nombre = formularioCrearJugadorFormData.get('formNombre');
             let equipo = formularioCrearJugadorFormData.get('formEquipo');
             let nacionalidad = formularioCrearJugadorFormData.get('formNacionalidad');
-            let foto = formularioCrearJugadorFormData.get('formFoto');
             let posicion = formularioCrearJugadorFormData.get('formPosicion')
+            let foto = this.formularioJugador.querySelector('#formFoto').foto;
 
             /*  let nombre = this.formularioJugador.querySelector('#formNombre').value;
+             let foto = formularioCrearJugadorFormData.get('formFoto').foto;
              let equipo = this.formularioJugador.querySelector('#formEquipo').value;
              let nacionalidad = this.formularioJugador.querySelector('#formNacionalidad').value;
              let foto = this.formularioJugador.querySelector('#formFoto').foto;
