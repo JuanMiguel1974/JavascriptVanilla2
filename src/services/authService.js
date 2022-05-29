@@ -38,11 +38,11 @@ class AuthService {
                         console.log(response);
                         return response.json();
                     } else {
-                        /*  pages.toast.init();
-                         pages.toast.show('Compruebe sus datos e intentelo de nuevo', 'error'); */
-                        /*   setTimeout(() => {
-                              window.location.reload();
-                          }, 998); */
+                        componentes.toast.init();
+                        componentes.toast.show('Login incorrecto. Compruebe sus datos e intentelo de nuevo', 'error');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 998);
                         return response.json().then((text) => {
                             console.log(text);
                             throw new Error(text.error.message);

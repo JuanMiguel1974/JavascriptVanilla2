@@ -20,16 +20,16 @@ class RegistroView extends View {
                 <div>
                     <label for="email"><b>Username</b></label>
                     <input type="text" placeholder="Enter Username" name="email" id="email" />
-                    <div id="erroresEmail"></>
+                    <div id="erroresEmail"></><br>
                 </div>
                 <div>
                     <label for="password"><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="password" id="password" />
-                    <div id="erroresPassword"></>
+                    <div id="erroresPassword"></><br>
                 </div>
                     <label for="nickname"> Nickname</label>
                     <input type="nickname" placeholder="Enter nickname" name="nickname" id="nickname" />
-                    <div id="erroresNickname"></>
+                    <div id="erroresNickname"></><br>
                 </div>
                     <button type="submit" id="registro">Registrate</button>
                     <label>
@@ -76,50 +76,43 @@ class RegistroView extends View {
 
             erroresEmail.innerHTML = mensajesErrorEmail.join(', ');
 
-            if (mensajesErrorEmail.length) {
-                return false;
-            } else {
-                const getErrorsPassword = () => {
-                    let erroresPassword = []
-                    if (password == null || !password.length) {
-                        erroresPassword.push('Ingresa tu password');
-                    }
-                    if (!expresiones.password.test(password || '')) {
-                        erroresPassword.push('Password entre 6 y 12 caracteres');
-                    }
-                    return erroresPassword
+            const getErrorsPassword = () => {
+                let erroresPassword = []
+                if (password == null || !password.length) {
+                    erroresPassword.push('Ingresa tu password');
                 }
-                var mensajesErrorPassword = getErrorsPassword();
-
-                var erroresPassword = this.divRegister.querySelector('#erroresPassword');
-
-                erroresPassword.innerHTML = mensajesErrorPassword.join(', ');
-            }
-            if (mensajesErrorPassword.length) {
-                return false
-            } else {
-                const getErrorsNickname = () => {
-                    let erroresNickname = []
-                    if (nickname == null || !nickname.length) {
-                        erroresNickname.push('Ingresa un nickname');
-                    }
-
-                    if (nickname.length < 4 || nickname.length > 16) {
-                        erroresNickname.push('El nickname debe tener entre 4 y 16 caracteres')
-                    }
-
-                    if (!expresiones.nickname.test(nickname || '')) {
-                        erroresNickname.push('Solo Letras, numeros, guion y guion_bajo');
-                    }
-                    return erroresNickname
+                if (!expresiones.password.test(password || '')) {
+                    erroresPassword.push('Password entre 6 y 12 caracteres');
                 }
-                var mensajesErrorNickname = getErrorsNickname();
-
-                var erroresNickname = this.divRegister.querySelector('#erroresNickname');
-
-                erroresNickname.innerHTML = mensajesErrorNickname.join(', ');
-
+                return erroresPassword
             }
+            var mensajesErrorPassword = getErrorsPassword();
+
+            var erroresPassword = this.divRegister.querySelector('#erroresPassword');
+
+            erroresPassword.innerHTML = mensajesErrorPassword.join(', ');
+
+            const getErrorsNickname = () => {
+                let erroresNickname = []
+                if (nickname == null || !nickname.length) {
+                    erroresNickname.push('Ingresa un nickname');
+                }
+
+                if (nickname.length < 4 || nickname.length > 16) {
+                    erroresNickname.push('El nickname debe tener entre 4 y 16 caracteres')
+                }
+
+                if (!expresiones.nickname.test(nickname || '')) {
+                    erroresNickname.push('Solo Letras, numeros, guion y guion_bajo');
+                }
+                return erroresNickname
+            }
+            var mensajesErrorNickname = getErrorsNickname();
+
+            var erroresNickname = this.divRegister.querySelector('#erroresNickname');
+
+            erroresNickname.innerHTML = mensajesErrorNickname.join(', ');
+
             if (mensajesErrorPassword.length || mensajesErrorEmail.length || mensajesErrorNickname.length) return false;
 
             handler({ email, password, nickname, returnSecureToken });

@@ -1,5 +1,6 @@
 import { View } from "./view.js"
 import { componentes } from '../componentes/index.componentes'
+import { fromEventPattern } from "rxjs";
 
 export { JugadorView };
 
@@ -51,28 +52,31 @@ class JugadorView extends View {
         //Objeto literal
         if (jugador == undefined) { jugador = { id: '', nombre: '', equipo: '', nacionalidad: '', foto: '', posicion: '' } }
 
-        let formulario = `<div class="mb-3">
+        let formulario = `
+ <form id="formularioCrearJugador"       
+  <div class="mb-3">
     <label for="formNombre" class="form-label">Nombre</label>
-    <input type="text" class="form-control" id="formNombre" placeholder="Nombre" value="${jugador.nombre}">
+    <input type="text" class="form-control" id="formNombre" name="formNombre" placeholder="Nombre" value="${jugador.nombre}">
   </div>
   <div class="mb-3">
     <label for="formEquipo" class="form-label">Equipo</label>
-    <input type="text" class="form-control" id="formEquipo" placeholder="Equipo" value="${jugador.equipo}">
+    <input type="text" class="form-control" id="formEquipo" placeholder="Equipo" name="formEquipo" value="${jugador.equipo}">
   </div>
   <div class="mb-3">
     <label for="formNacionalidad" class="form-label">Nacionalidad</label>
-    <input type="text" class="form-control" id="formNacionalidad" placeholder="Nacionalidad" value="${jugador.nacionalidad}">
+    <input type="text" class="form-control" id="formNacionalidad" name="formNacionalidad" placeholder="Nacionalidad" value="${jugador.nacionalidad}">
   </div>
   <div class="mb-3">
     <label for="formPosicion" class="form-label">Posicion</label>
-    <input type="text" class="form-control" id="formPosicion" placeholder="Posicion" value="${jugador.posicion}">
+    <input type="text" class="form-control" id="formPosicion" name="formPosicion" placeholder="Posicion" value="${jugador.posicion}">
   </div>
   <div class="mb-3">
     <label for="formFoto" class="form-label">Foto</label>
-    <input type="file" class="form-control" id="formFoto" placeholder="Foto">
+    <input type="file" class="form-control" id="formFoto" name="formFoto" placeholder="Foto">
     <img class="formFotoPreview" style="width:200px"/>
   </div>
   <div id="error"></div>
+  </form>
   `
 
         divJugador.innerHTML = formulario;
@@ -143,11 +147,20 @@ class JugadorView extends View {
             //foto: new RegExp(/([/|.|\w|\s|-])*\.(?:jpg|gif|png)/),
         }
         this.botonEnviar.addEventListener('click', () => {
-            let nombre = this.formularioJugador.querySelector('#formNombre').value;
-            let equipo = this.formularioJugador.querySelector('#formEquipo').value;
-            let nacionalidad = this.formularioJugador.querySelector('#formNacionalidad').value;
-            let foto = this.formularioJugador.querySelector('#formFoto').foto;
-            let posicion = this.formularioJugador.querySelector('#formPosicion').value;
+
+            let formularioCrearJugadorFormData = new FormData(this.formularioJugador.querySelector('form'));
+
+            let nombre = formularioCrearJugadorFormData.get('formNombre');
+            let equipo = formularioCrearJugadorFormData.get('formEquipo');
+            let nacionalidad = formularioCrearJugadorFormData.get('formNacionalidad');
+            let foto = formularioCrearJugadorFormData.get('formFoto');
+            let posicion = formularioCrearJugadorFormData.get('formPosicion')
+
+            /*  let nombre = this.formularioJugador.querySelector('#formNombre').value;
+             let equipo = this.formularioJugador.querySelector('#formEquipo').value;
+             let nacionalidad = this.formularioJugador.querySelector('#formNacionalidad').value;
+             let foto = this.formularioJugador.querySelector('#formFoto').foto;
+             let posicion = this.formularioJugador.querySelector('#formPosicion').value; */
 
             const getErrors = () => {
                 let errores = []

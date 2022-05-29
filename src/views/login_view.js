@@ -19,17 +19,16 @@ class LoginView extends View {
                 <div class="form-control">
                     <label for="email"><b>Email</b></label>
                     <input type="email" placeholder="Enter Username" name="email" id="email" />
-                    <p></p>
-                </div>
+                    <div id="erroresEmail"></>
+                </div><br>
 
                 <div class="form-control">
                     <label for="password"><b>Password</b></label>
                     <input type="password" placeholder="Enter Password" name="password" id="password" />
-                    <p></p>
-                </div>
+                    <div id="erroresPassword"></>
+                </div><br>
                     <button type="submit" id="login">Login</button>
             </div>
-            <div id="error"></div>
         </form>
     </div>`;
         this.divRow.append(this.divLogin);
@@ -45,47 +44,45 @@ class LoginView extends View {
             correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
         }
         this.divLogin.querySelector('#formLogin').addEventListener('submit', (event) => {
+
+            let formularioLogin = new FormData(document.querySelector("form"))
             event.preventDefault()
-            let email = event.target.email.value
-            let password = event.target.password.value
+
+            let email = formularioLogin.get('email');
+            let password = formularioLogin.get('password');
             let returnSecureToken = true;
 
-            // Closure
-            const getErrors = () => {
-                let errores = []
-                if (email == null || !email.length) {
-                    // undefined == null // true
-                    // undefined === null // false
-                    errores.push('Ingresa un correo electrónico');
-                }
+            const getErrorsEmail = () => {
+                let erroresEmail = []
                 if (!expresiones.correo.test(email)) {
-                    errores.push('Ingresa un mail valido');
+                    erroresEmail.push('Ingresa un mail valido');
                 }
-                if (password == null || !password.length) {
-                    errores.push('Ingresa tu password');
+                return erroresEmail
+            }
+            var mensajesErrorEmail = getErrorsEmail();
 
+            var erroresEmail = this.divLogin.querySelector('#erroresEmail');
+
+            erroresEmail.innerHTML = mensajesErrorEmail.join(', ');
+
+            const getErrorsPassword = () => {
+                let erroresPassword = []
+                if (password == null || !password.length) {
+                    erroresPassword.push('Ingresa tu password');
                 }
                 if (!expresiones.password.test(password || '')) {
-                    errores.push('Password entre 6 y 12 caracteres');
+                    erroresPassword.push('Password entre 6 y 12 caracteres');
                 }
-                return errores
+                return erroresPassword
             }
+            var mensajesErrorPassword = getErrorsPassword();
 
-            var mensajesError = getErrors();
+            var erroresPassword = this.divLogin.querySelector('#erroresPassword');
 
-            var error = this.divLogin.querySelector('#error');
+            erroresPassword.innerHTML = mensajesErrorPassword.join(', ');
 
-            error.innerHTML = mensajesError.join(', ');
+            if (mensajesErrorPassword.length || mensajesErrorEmail.length) return false
 
-            if (mensajesError.length) return false;
-
-            /*  let loginFormData = new FormData();
-
-             loginFormData.append('email', email);
-             loginFormData.append('password', password);
-             loginFormData.append('returnSecureToken', returnSecureToken);
-
-             handler(loginFormData); */
             handler({ email, password, returnSecureToken });
         });
     }
