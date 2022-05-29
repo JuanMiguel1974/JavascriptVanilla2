@@ -1,8 +1,8 @@
 import { componentes } from '../componentes/index.componentes'
 import '../css/toast.css'
-export { LoginService };
+export { AuthService };
 
-class LoginService {
+class AuthService {
     constructor() {
             this.urlLogin = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD8hfH8YVdrzF4LkhLi4q5lKhVludOeG_k';
             this.urlRegister = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD8hfH8YVdrzF4LkhLi4q5lKhVludOeG_k';
@@ -35,8 +35,8 @@ class LoginService {
                             window.location.reload();
                         }, 1000);
 
+                        console.log(response);
                         return response.json();
-
                     } else {
                         /*  pages.toast.init();
                          pages.toast.show('Compruebe sus datos e intentelo de nuevo', 'error'); */
@@ -53,7 +53,7 @@ class LoginService {
 
                     localStorage.setItem("idToken", user.idToken);
                     localStorage.setItem("email", user.email);
-
+                    // localStorage.setItem("uid", user.localId);
                     console.log(user);
                 })
         } catch (error) {
@@ -104,7 +104,7 @@ class LoginService {
                         return response.json().then((text) => {
                             console.log(text);
                             componentes.toast.init();
-                            componentes.toast.show('Compruebe sus datos. Intetalo de nuevo', 'error');
+                            componentes.toast.show('su email ya está registrado', 'error');
                             setTimeout(() => {
                                 window.location.reload();
                             }, 2000);

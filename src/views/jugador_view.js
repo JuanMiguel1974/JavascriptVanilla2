@@ -71,7 +71,9 @@ class JugadorView extends View {
     <label for="formFoto" class="form-label">Foto</label>
     <input type="file" class="form-control" id="formFoto" placeholder="Foto">
     <img class="formFotoPreview" style="width:200px"/>
-  </div>`
+  </div>
+  <div id="error"></div>
+  `
 
         divJugador.innerHTML = formulario;
 
@@ -135,12 +137,57 @@ class JugadorView extends View {
 
     bindAddJugador(handler) {
         console.log('bindAddJugador');
+
+        const expresiones = {
+            nombre: /^[a-zA-ZÀ-ÿ\s]{5,40}$/, // Letras y espacios, pueden llevar acentos.
+            //foto: new RegExp(/([/|.|\w|\s|-])*\.(?:jpg|gif|png)/),
+        }
         this.botonEnviar.addEventListener('click', () => {
             let nombre = this.formularioJugador.querySelector('#formNombre').value;
             let equipo = this.formularioJugador.querySelector('#formEquipo').value;
             let nacionalidad = this.formularioJugador.querySelector('#formNacionalidad').value;
             let foto = this.formularioJugador.querySelector('#formFoto').foto;
             let posicion = this.formularioJugador.querySelector('#formPosicion').value;
+
+            const getErrors = () => {
+                let errores = []
+                if (nombre == null || !nombre.length) {
+                    errores.push('Nombre requerido');
+                }
+                if (!expresiones.nombre.test(nombre)) {
+                    errores.push('Nombre: Letras y espacios, pueden llevar acentos,Entre 5 y 40 caracteres');
+                }
+                if (equipo == null || !equipo.length) {
+                    errores.push('Equipo requerido');
+                }
+                if (!expresiones.nombre.test(equipo || '')) {
+                    errores.push('Equipo: Letras y espacios, pueden llevar acentos. Entre 5 y 40 caracteres');
+                }
+                if (nacionalidad == null || !nacionalidad.length) {
+                    errores.push('Nacionalidad requerido');
+                }
+
+                if (nacionalidad.length < 4 || nacionalidad.length > 16) {
+                    errores.push('Nacionalidad: entre 4 y 16 caracteres')
+                }
+
+                if (!expresiones.nombre.test(nacionalidad || '')) {
+                    errores.push('Nacionalidad: Letras y espacios, pueden llevar acentos,Entre 5 y 40 caracteres');
+                }
+
+                /* if (!expresiones.foto.test(foto)) {
+                    errores.push('Foto no valida') } */
+
+                return errores
+            }
+
+            var mensajesError = getErrors();
+
+            var error = this.divRow.querySelector('#error');
+
+            error.innerHTML = mensajesError.join(', ');
+
+            if (mensajesError.length) return false;
 
             handler({ nombre, equipo, nacionalidad, foto, posicion });
         });

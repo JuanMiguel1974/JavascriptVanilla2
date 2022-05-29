@@ -78,6 +78,14 @@ class LoginView extends View {
             error.innerHTML = mensajesError.join(', ');
 
             if (mensajesError.length) return false;
+
+            /*  let loginFormData = new FormData();
+
+             loginFormData.append('email', email);
+             loginFormData.append('password', password);
+             loginFormData.append('returnSecureToken', returnSecureToken);
+
+             handler(loginFormData); */
             handler({ email, password, returnSecureToken });
         });
     }

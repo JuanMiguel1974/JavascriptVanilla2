@@ -1,7 +1,7 @@
 import { Page } from "../pages/page"
 import { RegistroController } from "../controllers/registro_controller"
 import { RegistroView } from "../views/registro_view.js";
-import { LoginService } from "../services/loginService";
+import { AuthService } from "../services/authService";
 export { PageRegister };
 
 class PageRegister extends Page {
@@ -11,6 +11,6 @@ class PageRegister extends Page {
     }
 
     populate(container) {
-        let loginController = new RegistroController(new LoginService(), new RegistroView(container));
+        let loginController = new RegistroController(new AuthService(), new RegistroView(container));
     }
 }

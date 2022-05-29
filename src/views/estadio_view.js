@@ -3,6 +3,16 @@ import { componentes } from '../componentes/index.componentes'
 
 export { EstadioView };
 
+// Objeto predefinido
+
+let estadioPredefinido = {
+    id: '',
+    nombre: '',
+    ciudad: '',
+    pais: '',
+    imagen: ''
+};
+
 class EstadioView extends View {
     constructor(container) { super(container); }
 
@@ -45,7 +55,7 @@ class EstadioView extends View {
     }
 
     construirFormulario(estadio, divEstadio) {
-        if (estadio == undefined) { estadio = { id: '', nombre: '', ciudad: '', pais: '', imagen: '' } }
+        if (estadio == undefined) { estadio = estadioPredefinido }
 
         let formulario = `<div class="mb-3">
     <label for="formNombre" class="form-label">Nombre</label>
@@ -67,16 +77,16 @@ class EstadioView extends View {
 
         divEstadio.innerHTML = formulario;
 
-        divEstadio.querySelector('#formFoto').imagen = estadio.imagen; // per a afegir l'atribut foto a l'input
+        divEstadio.querySelector('#formFoto').imagen = estadio.imagen;
         divEstadio.querySelector('.formFotoPreview').src = estadio.imagen;
 
         divEstadio.querySelector('#formFoto').addEventListener('change', function() {
             let file = this.files[0];
             let reader = new FileReader();
             reader.onloadend = () => {
-                    this.imagen = reader.result;
-                    divEstadio.querySelector('.formFotoPreview').src = this.imagen;
-                } // this.foto es guarda en el input
+                this.imagen = reader.result;
+                divEstadio.querySelector('.formFotoPreview').src = this.imagen;
+            }
             reader.readAsDataURL(file);
         });
     }
@@ -124,10 +134,18 @@ class EstadioView extends View {
 
     bindAddEstadio(handler) {
         this.botonEnviar.addEventListener('click', () => {
-            let nombre = this.formularioEstadio.querySelector('#formNombre').value;
+            /* let nombre = this.formularioEstadio.querySelector('#formNombre').value;
             let ciudad = this.formularioEstadio.querySelector('#formCiudad').value;
             let pais = this.formularioEstadio.querySelector('#formPais').value;
-            let imagen = this.formularioEstadio.querySelector('#formFoto').imagen;
+            let imagen = this.formularioEstadio.querySelector('#formFoto').imagen; */
+
+            //Destructuring de formulario estadio
+            const [formNombre, formCiudad, formPais, formFoto] = [...this.formularioEstadio.querySelectorAll('input')]
+            let nombre = formNombre.value;
+            let ciudad = formCiudad.value;
+            let pais = formPais.value;
+            let imagen = formFoto.imagen;
+
 
             handler({ nombre, ciudad, pais, imagen });
         });
